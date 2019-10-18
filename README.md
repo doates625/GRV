@@ -1,4 +1,4 @@
-# Title
+# GRV
 Class for 1-dimensional Gaussian random variable arithmetic  
 Written by Dan Oates (WPI Class of 2020)
 
