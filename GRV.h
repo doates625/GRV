@@ -1,13 +1,7 @@
 /**
  * @file GRV.h
- * @brief Class for implementing 1-dimensional Gaussian random variables
+ * @brief Class for 1-dimensional Gaussian random variable arithmetic
  * @author Dan Oates (WPI Class of 2020)
- * 
- * This class represents 1D Gaussian random varaibles by their mean 'mean'
- * and variance 'var' in 32-bit floating-point format. Mathematical functions
- * and operators are included which propagate the variance through each
- * calculation via linearization. Note that protections are not included for 
- * potentially-singular or invalid operations such as inversion and sqrt.
  */
 
 /**
