@@ -4,7 +4,7 @@
  */
 #include "GRV.h"
 #include <CppUtil.h>
-#include <math.h>
+using Util::square;
 
 /**
  * @brief Constructs Gaussian
@@ -31,7 +31,7 @@ GRV::GRV()
  */
 GRV sin(const GRV& g)
 {
-	return GRV(sinf(g.mean), g.var * fsq(cosf(g.mean)));
+	return GRV(sinf(g.mean), g.var * square(cosf(g.mean)));
 }
 
 /**
@@ -39,7 +39,7 @@ GRV sin(const GRV& g)
  */
 GRV cos(const GRV& g)
 {
-	return GRV(cosf(g.mean), g.var * fsq(sinf(g.mean)));
+	return GRV(cosf(g.mean), g.var * square(sinf(g.mean)));
 }
 
 /**
@@ -47,7 +47,7 @@ GRV cos(const GRV& g)
  */
 GRV tan(const GRV& g)
 {
-	return GRV(tanf(g.mean), g.var * fsq(1.0f / fsq(cosf(g.mean))));
+	return GRV(tanf(g.mean), g.var * square(1.0f / square(cosf(g.mean))));
 }
 
 /**
@@ -55,7 +55,7 @@ GRV tan(const GRV& g)
  */
 GRV asin(const GRV& g)
 {
-	return GRV(asinf(g.mean), g.var / fabsf(1.0f - fsq(g.mean)));
+	return GRV(asinf(g.mean), g.var / fabsf(1.0f - square(g.mean)));
 }
 
 /**
@@ -63,7 +63,7 @@ GRV asin(const GRV& g)
  */
 GRV acos(const GRV& g)
 {
-	return GRV(acosf(g.mean), g.var / fabsf(1.0f - fsq(g.mean)));
+	return GRV(acosf(g.mean), g.var / fabsf(1.0f - square(g.mean)));
 }
 
 /**
@@ -71,7 +71,7 @@ GRV acos(const GRV& g)
  */
 GRV atan(const GRV& g)
 {
-	return GRV(atanf(g.mean), g.var / fsq(1.0f + fsq(g.mean)));
+	return GRV(atanf(g.mean), g.var / square(1.0f + square(g.mean)));
 }
 
 /**
@@ -79,7 +79,7 @@ GRV atan(const GRV& g)
  */
 GRV sinh(const GRV& g)
 {
-	return GRV(sinhf(g.mean), g.var * fsq(coshf(g.mean)));
+	return GRV(sinhf(g.mean), g.var * square(coshf(g.mean)));
 }
 
 /**
@@ -87,7 +87,7 @@ GRV sinh(const GRV& g)
  */
 GRV cosh(const GRV& g)
 {
-	return GRV(coshf(g.mean), g.var * fsq(sinhf(g.mean)));
+	return GRV(coshf(g.mean), g.var * square(sinhf(g.mean)));
 }
 
 /**
@@ -96,7 +96,7 @@ GRV cosh(const GRV& g)
 GRV tanh(const GRV& g)
 {
 	const float tanhm = tanhf(g.mean);
-	return GRV(tanhm, g.var * fsq(1.0f - fsq(tanhm)));
+	return GRV(tanhm, g.var * square(1.0f - square(tanhm)));
 }
 
 /**
@@ -113,7 +113,7 @@ GRV sqrt(const GRV& g)
 GRV exp(const GRV& g)
 {
 	const float expm = exp(g.mean);
-	return GRV(expm, g.var * fsq(expm));
+	return GRV(expm, g.var * square(expm));
 }
 
 /**
@@ -121,7 +121,7 @@ GRV exp(const GRV& g)
  */
 GRV log(const GRV& g)
 {
-	return GRV(logf(g.mean), g.var / fsq(g.mean));
+	return GRV(logf(g.mean), g.var / square(g.mean));
 }
 
 /**
@@ -130,9 +130,9 @@ GRV log(const GRV& g)
 GRV atan2(const GRV& gy, const GRV& gx)
 {
 	const float mean = atan2f(gy.mean, gx.mean);
-	const float x_sq = fsq(gx.mean);
-	const float y_sq = fsq(gy.mean);
-	const float var = (x_sq * gy.var + y_sq * gx.var) / fsq(x_sq + y_sq);
+	const float x_sq = square(gx.mean);
+	const float y_sq = square(gy.mean);
+	const float var = (x_sq * gy.var + y_sq * gx.var) / square(x_sq + y_sq);
 	return GRV(mean, var);
 }
 
@@ -176,7 +176,7 @@ GRV operator-(const GRV& g, float n)
  */
 GRV operator*(const GRV& g, float n)
 {
-	return GRV(g.mean * n, g.var * fsq(n));
+	return GRV(g.mean * n, g.var * square(n));
 }
 
 /**
@@ -193,7 +193,7 @@ GRV operator/(const GRV& g, float n)
 GRV operator^(const GRV& g, float n)
 {
 	const float mean = powf(g.mean, n);
-	const float var = g.var * fsq(n * powf(g.mean, n - 1.0f));
+	const float var = g.var * square(n * powf(g.mean, n - 1.0f));
 	return GRV(mean, var);
 }
 
@@ -219,7 +219,7 @@ GRV operator-(const GRV& lhs, const GRV& rhs)
 GRV operator*(const GRV& lhs, const GRV& rhs)
 {
 	const float mean = lhs.mean * rhs.mean;
-	const float var = fsq(lhs.mean) * rhs.var + fsq(rhs.mean) * lhs.var;
+	const float var = square(lhs.mean) * rhs.var + square(rhs.mean) * lhs.var;
 	return GRV(mean, var);
 }
 
@@ -229,8 +229,8 @@ GRV operator*(const GRV& lhs, const GRV& rhs)
 GRV operator/(const GRV& lhs, const GRV& rhs)
 {
 	const float mean = lhs.mean / rhs.mean;
-	const float del_lhs_sq = 1.0f / fsq(rhs.mean);
-	const float del_rhs_sq = fsq(lhs.mean * del_lhs_sq);
+	const float del_lhs_sq = 1.0f / square(rhs.mean);
+	const float del_rhs_sq = square(lhs.mean * del_lhs_sq);
 	const float var = del_lhs_sq * lhs.var + del_rhs_sq * rhs.var;
 	return GRV(mean, var);
 }
@@ -243,6 +243,6 @@ GRV operator^(const GRV& lhs, const GRV& rhs)
 	const float mean = powf(lhs.mean, rhs.mean);
 	const float del_lhs = rhs.mean * powf(lhs.mean, rhs.mean - 1.0f);
 	const float del_rhs = mean * logf(lhs.mean);
-	const float var = fsq(del_lhs) * lhs.var + fsq(del_rhs) * rhs.var;
+	const float var = square(del_lhs) * lhs.var + square(del_rhs) * rhs.var;
 	return GRV(mean, var);
 }
