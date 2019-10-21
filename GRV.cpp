@@ -4,7 +4,7 @@
  */
 #include "GRV.h"
 #include <CppUtil.h>
-using Util::square;
+using CppUtil::square;
 
 /**
  * @brief Constructs Gaussian
